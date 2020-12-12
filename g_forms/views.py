@@ -14,7 +14,7 @@ def index(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('login'))
     forms = Form.objects.filter(creator = request.user)
-    return render(request, "index/index.html", {
+    return render(request, "g_forms/index.html", {
         "forms": forms
     })
 
@@ -31,10 +31,10 @@ def login_view(request):
             login(request, user)
             return HttpResponseRedirect(reverse('index'))
         else:
-            return render(request, "index/login.html", {
+            return render(request, "g_forms/login.html", {
                 "message": "Invalid username and/or password"
             })
-    return render(request, "index/login.html")
+    return render(request, "g_forms/login.html")
 
 def register(request):
     #Check if the user is logged in
@@ -47,12 +47,12 @@ def register(request):
         confirmation = request.POST["confirmation"]
         #check if the password is the same as confirmation
         if password != confirmation:
-            return render(request, "index/register.html", {
+            return render(request, "g_forms/register.html", {
                 "message": "Passwords must match."
             })
         #Checks if the username is already in use
         if User.objects.filter(email = email).count() == 1:
-            return render(request, "index/register.html", {
+            return render(request, "g_forms/register.html", {
                 "message": "Email already taken."
             })
         try:
@@ -61,10 +61,10 @@ def register(request):
             login(request, user)
             return HttpResponseRedirect(reverse('index'))
         except IntegrityError:
-            return render(request, "index/register.html", {
+            return render(request, "g_forms/register.html", {
                 "message": "Username already taken"
             })
-    return render(request, "index/register.html")
+    return render(request, "g_forms/register.html")
 
 
 def logout_view(request):
@@ -104,7 +104,7 @@ def edit_form(request, code):
     #Checking if form creator is user
     if formInfo.creator != request.user:
         return HttpResponseRedirect(reverse("403"))
-    return render(request, "index/form.html", {
+    return render(request, "g_forms/form.html", {
         "code": code,
         "form": formInfo
     })
@@ -391,7 +391,7 @@ def score(request, code):
     if not formInfo.is_quiz:
         return HttpResponseRedirect(reverse("edit_form", args = [code]))
     else:
-        return render(request, "index/score.html", {
+        return render(request, "g_forms/score.html", {
             "form": formInfo
         })
 
@@ -490,7 +490,7 @@ def view_form(request, code):
     if formInfo.authenticated_responder:
         if not request.user.is_authenticated:
             return HttpResponseRedirect(reverse("login"))
-    return render(request, "index/view_form.html", {
+    return render(request, "g_forms/view_form.html", {
         "form": formInfo
     })
 
@@ -533,7 +533,7 @@ def submit_form(request, code):
                 answer.save()
                 response.response.add(answer)
                 response.save()
-        return render(request, "index/form_response.html", {
+        return render(request, "g_forms/form_response.html", {
             "form": formInfo,
             "code": code
         })
@@ -549,7 +549,7 @@ def responses(request, code):
     #Checking if form creator is user
     if formInfo.creator != request.user:
         return HttpResponseRedirect(reverse("403"))
-    return render(request, "index/responses.html", {
+    return render(request, "g_forms/responses.html", {
         "form": formInfo,
         "responses": Responses.objects.filter(response_to = formInfo)
     })
@@ -593,7 +593,7 @@ def response(request, code, response_code):
                         if k.is_answer and k.pk not in answer_keys: answer_keys.append(k.pk)
                     _temp.append(i.answer_to.pk)
                 if answers == answer_keys: score += i.answer_to.score
-    return render(request, "index/response.html", {
+    return render(request, "g_forms/response.html", {
         "form": formInfo,
         "response": responseInfo,
         "score": score,
@@ -638,11 +638,11 @@ def edit_response(request, code, response_code):
         if formInfo.is_quiz:
             return HttpResponseRedirect(reverse("response", args = [formInfo.code, response.response_code]))
         else:
-            return render(request, "index/form_response.html", {
+            return render(request, "g_forms/form_response.html", {
                 "form": formInfo,
                 "code": response.response_code
             })
-    return render(request, "index/edit_response.html", {
+    return render(request, "g_forms/edit_response.html", {
         "form": formInfo,
         "response": response
     })
