@@ -1,26 +1,27 @@
 {% extends 'g_forms/layout.html' %}
 
 {% block body %}
-
-<div class="container">    
-    <form class="box box-shadow margin-top-bottom" method="POST" action = "{% url 'login' %}">
-        <div class="form-group">
-            <h1 class="box-title">Login user</h1>
-            <p class="form-error">{{message}}</p>
-            {% csrf_token %}
-        </div>
-        <div class="form-group">
-            <p class="form-label">Username:</p>
-            <input type="text" class="form-control" name="username">
-        </div>
-        <div class="form-group">
-            <p class="form-label">Password:</p>
-            <input type="password" name="password" class="form-control">
-        </div>
-        <div class="form-group">
-            <p class="form-label">Don't have account yet? <a class="link" href = "{% url 'register' %}">Register</a></p>
-            <input type="submit" value="Login" class="btn btn-dark form-control">
-        </div>
-    </form>
+<div class="create-form">
+    <div class="container">    
+        <form class="box box-shadow margin-top-bottom" method="POST" action = "{% url 'login' %}" style="margin-left: 250px; margin-right: 250px;">
+            <div class="form-group">
+                <h1 class="box-title">Login user</h1>
+                <p class="form-error">{{message}}</p>
+                {% csrf_token %}
+            </div>
+            <div class="form-group">
+                <p class="form-label">Username:</p>
+                <input type="text" class="form-control" name="username">
+            </div>
+            <div class="form-group">
+                <p class="form-label">Password:</p>
+                <input type="password" name="password" class="form-control">
+            </div>
+            <div class="form-group">
+                <p class="form-label">Don't have account yet? <a class="link" href = "{% url 'register' %}">Register</a></p>
+                <input type="submit" value="Login" class="btn btn-dark form-control">
+            </div>
+        </form>
+    </div>
 </div>
 {% endblock %}
