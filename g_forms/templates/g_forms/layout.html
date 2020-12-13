@@ -12,17 +12,20 @@
     <script src = "{% static 'index/index.js' %}" defer></script>
     <script src="{% static 'lib/cookie.min.js' %}" defer></script>
 
+    <script src="{% static 'index/form.js' %}"></script>
+
     {% block script %}
     {% endblock %}
 </head>
 
 <body>
     <div class="container-fluid">
-        <div class="topnav nav-effect">
+        <div class="topnav nav-effect" style="margin-bottom: 20px;">
             <div class="nav-padding">
                 <span class="nav-ham" id="nav-ham">&#9776;</span>
-                <img src="{% static 'Icon/icon.png' %}" alt="Google Forms Icon(CLONE)" class="navbar-icon form-icon"
-                    title="Forms">
+                <a href = "/">
+                    <img src="{% static 'Icon/icon.png' %}" alt="Google Forms Icon(CLONE)" class="navbar-icon form-icon" title="Forms">
+                </a>
                 <span class="nav-text" title="Forms"><a href="{% url 'index' %}" class="nav-link">Django
                         Forms</a></span>
                 <a href="{% url 'logout' %}">
